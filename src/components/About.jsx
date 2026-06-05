@@ -1,57 +1,133 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
+import TechBadge from './TechBadge';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (d = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.5, delay: d, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const pills = [
-  'B.Tech AI — 2024–2028',
-  'GPA: 7.2 / 10',
-  'GDG Event Manager',
+const FOCUS = [
+  'Agentic AI systems with LangGraph and LLMs',
+  'RAG pipelines with FAISS and vector search',
+  'Full-stack ML products with FastAPI and React',
+  'Data-driven dashboards and ETL pipelines',
+  'Scalable web systems with MERN and Next.js',
+];
+
+const STACK = [
+  'Python', 'JavaScript', 'TypeScript', 'SQL',
+  'React', 'Next.js', 'Node.js', 'Express', 'FastAPI',
+  'LangChain', 'LangGraph', 'FAISS', 'HuggingFace', 'Groq',
+  'MongoDB', 'MySQL', 'Firebase', 'PostgreSQL',
+  'Pandas', 'NumPy', 'Tableau', 'Streamlit', 'Git', 'Figma',
+];
+
+const STATS = [
+  { n: '06', l: 'Projects Shipped' },
+  { n: '3+', l: 'AI Systems Built' },
+  { n: '1', l: 'Internship' },
 ];
 
 export default function About() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
-    <section id="about" className="py-24 px-6" ref={ref}>
-      <div className="max-w-5xl mx-auto">
-        <motion.p
-          className="section-label mb-6"
-          variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0}
-        >
-          About
-        </motion.p>
+    <section className="about-section" id="about">
+      <motion.p
+        className="about-chapter"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.8 }}
+      >
+        002 / About
+      </motion.p>
 
-        <motion.p
-          className="text-[#a1a1aa] text-lg leading-relaxed max-w-2xl mb-10"
-          variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0.1}
+      <div className="about-layout">
+        {/* Left sticky headline */}
+        <motion.h2
+          className="about-headline"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
         >
-          I'm a B.Tech AI student at Rishihood University with hands-on experience across
-          full-stack engineering, generative AI systems, and data analytics. I care deeply
-          about building things that are fast, intelligent, and purposeful.
-        </motion.p>
+          Sharp<br />
+          code,<br />
+          <span className="hl-italic">smarter</span><br />
+          systems.
+        </motion.h2>
 
-        <motion.div
-          className="flex flex-wrap gap-3"
-          variants={fadeUp} initial="hidden" animate={inView ? 'visible' : 'hidden'} custom={0.2}
-        >
-          {pills.map((pill) => (
-            <span
-              key={pill}
-              className="px-4 py-2 rounded-lg text-sm font-medium text-[#a1a1aa]"
-              style={{ background: '#111111', border: '1px solid #1f1f1f' }}
-            >
-              {pill}
-            </span>
-          ))}
-        </motion.div>
+        {/* Right content */}
+        <div>
+          <motion.p
+            className="about-para"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUp}
+          >
+            I'm <strong>Mouli Srivastava</strong> — a full-stack developer and AI engineer who builds systems that think. I work at the intersection of the MERN stack and agentic AI, shipping production-grade applications powered by LLMs, RAG pipelines, and multi-node LangGraph workflows.
+          </motion.p>
+
+          <motion.p
+            className="about-para"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUp}
+          >
+            My edge is bridging the gap between raw model intelligence and real-world product utility — every system I ship is explainable, grounded in evidence, and built to handle failure gracefully.
+          </motion.p>
+
+          {/* Stats */}
+          <motion.div
+            className="about-stats-row"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUp}
+          >
+            {STATS.map(({ n, l }) => (
+              <div className="about-stat" key={l}>
+                <div className="about-stat-n">{n}</div>
+                <div className="about-stat-l">{l}</div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Focus areas */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUp}
+          >
+            <p className="about-focus-title">Currently Focused On</p>
+            <div className="about-focus-rows">
+              {FOCUS.map((item, i) => (
+                <div className="about-focus-row" key={item}>
+                  <span className="about-focus-idx">0{i + 1}</span>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Stack */}
+          <motion.div
+            className="stack-block"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUp}
+          >
+            <p className="stack-title">Tech Stack</p>
+            <div className="tech-badge-grid">
+              {STACK.map((t) => (
+                <TechBadge key={t} name={t} />
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,94 +1,128 @@
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { CheckCircle2, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
+import TechBadge from './TechBadge';
 
-const bullets = [
-  'Built adaptive UIs with React & Tailwind CSS for desktop, tablet, and mobile viewports.',
-  'Integrated API-driven components — filters, dashboards, and dynamic lists — with backend teams.',
-  'Assisted in connecting LLM-based GenAI features for content suggestions and smart search.',
-  'Refactored components with Redux state management, reducing unnecessary re-renders.',
-  'Used Python, Pandas & Matplotlib for data handling to improve internal dashboard insights.',
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } },
+};
+
+const EXPERIENCE = [
+  {
+    role: 'Web Dev Intern',
+    org: 'CollegePur',
+    period: 'Jun – Aug 2025',
+    location: 'Remote',
+    bullets: [
+      'Built responsive UI systems with React and Tailwind CSS, reducing page load time by 30%.',
+      'Integrated REST API endpoints and dynamic filter arrays for course listings.',
+      'Connected agentic GenAI suggestion models to the frontend user experience.',
+      'Refactored component hooks to minimize client-side rendering lag across transitions.',
+      'Extracted database insights using Python Pandas for product analytics reporting.',
+    ],
+  },
 ];
 
-const techStack = [
-  'React', 'Tailwind CSS', 'Redux', 'Node.js', 'Python', 'Pandas', 'Matplotlib', 'LLM / GenAI',
+const EDUCATION = [
+  {
+    name: 'B.Tech — Artificial Intelligence',
+    inst: 'Newton School of Technology, Rishihood University',
+    period: '2024 – 2028',
+    grade: 'GPA 7.2 / 10',
+  },
+  {
+    name: 'Intermediate (Class XII)',
+    inst: 'Lal Bahadur Shastri School, Kota',
+    period: '2023 – 2024',
+    grade: '78.2%',
+  },
+  {
+    name: 'Matriculation (Class X)',
+    inst: 'Lucknow Public School, Lucknow',
+    period: '2021 – 2022',
+    grade: '89.9%',
+  },
+];
+
+const SKILLS_PROSE = [
+  { cat: 'Languages', items: 'Python / SQL / JavaScript / TypeScript' },
+  { cat: 'Frontend', items: 'React / Next.js / Tailwind / Redux' },
+  { cat: 'Backend', items: 'Node.js / Express / FastAPI / Streamlit' },
+  { cat: 'AI / ML', items: 'LangChain / LangGraph / FAISS / HuggingFace / Groq / OpenAI' },
+  { cat: 'Databases', items: 'MongoDB / MySQL / Firebase / PostgreSQL' },
+  { cat: 'Analytics', items: 'Pandas / NumPy / Tableau / Excel / Matplotlib' },
 ];
 
 export default function Experience() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-
   return (
-    <section id="experience" className="py-24 px-6" ref={ref}>
-      <div className="max-w-5xl mx-auto">
-        <motion.p
-          className="section-label mb-10"
-          initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4 }}
-        >
-          Experience
-        </motion.p>
+    <section className="resume-section" id="resume">
+      <motion.p
+        className="resume-chapter"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.8 }}
+      >
+        004 / Resume
+      </motion.p>
 
+      <div className="resume-columns">
+        {/* Left: Experience + Education */}
         <motion.div
-          className="rounded-xl p-8"
-          style={{ background: '#111111', border: '1px solid #1f1f1f' }}
-          initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          className="resume-left"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
         >
-          {/* Card header */}
-          <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-            <div>
-              <div className="flex items-center gap-2.5 mb-1.5">
-                <span className="text-white font-bold text-xl">CollegePur</span>
-                <span
-                  className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-md"
-                  style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.18)', color: '#818cf8' }}
-                >
-                  Internship
-                </span>
+          <p className="resume-block-title">Professional Timeline</p>
+
+          {EXPERIENCE.map((e) => (
+            <div className="exp-item" key={e.org}>
+              <div className="exp-top-row">
+                <span className="exp-role">{e.role}</span>
+                <span className="exp-period-tag">{e.period}</span>
               </div>
-              <p className="text-white font-semibold text-base">Frontend Web Developer Intern</p>
+              <p className="exp-org-label">{e.org} · {e.location}</p>
+              <ul className="exp-list">
+                {e.bullets.map((b, i) => (
+                  <li key={i} className="exp-list-item">{b}</li>
+                ))}
+              </ul>
             </div>
-            <div className="flex flex-col items-end gap-1.5 text-right">
-              <span className="text-[#a1a1aa] text-sm font-medium">June 2025 – Aug 2025</span>
-              <span
-                className="inline-flex items-center gap-1 text-xs text-[#52525b] px-2.5 py-1 rounded-md"
-                style={{ background: '#0a0a0a', border: '1px solid #1f1f1f' }}
-              >
-                <MapPin size={11} /> Remote
-              </span>
-            </div>
-          </div>
+          ))}
 
-          {/* Divider */}
-          <div className="border-t border-[#1f1f1f] mb-6" />
-
-          {/* Bullets */}
-          <ul className="flex flex-col gap-3 mb-8">
-            {bullets.map((b, i) => (
-              <motion.li
-                key={i}
-                className="flex items-start gap-3 text-[#a1a1aa] text-sm leading-relaxed"
-                initial={{ opacity: 0, x: -12 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.4, delay: 0.2 + i * 0.07 }}
-              >
-                <CheckCircle2 size={15} className="shrink-0 mt-0.5 text-indigo-400" />
-                {b}
-              </motion.li>
+          <div className="edu-section">
+            <p className="resume-block-title">Academic Milestones</p>
+            {EDUCATION.map((edu) => (
+              <div className="edu-row" key={edu.name}>
+                <div className="edu-left">
+                  <div className="edu-name">{edu.name}</div>
+                  <div className="edu-inst">{edu.inst} · {edu.period}</div>
+                </div>
+                <span className="edu-grade">{edu.grade}</span>
+              </div>
             ))}
-          </ul>
+          </div>
+        </motion.div>
 
-          {/* Tech stack */}
-          <div className="flex flex-wrap gap-2">
-            {techStack.map((t) => (
-              <span
-                key={t}
-                className="text-xs font-medium px-2.5 py-1 rounded-md text-[#52525b] hover:text-[#a1a1aa] transition-colors"
-                style={{ background: '#0a0a0a', border: '1px solid #1f1f1f' }}
-              >
-                {t}
-              </span>
+        {/* Right: Skills prose */}
+        <motion.div
+          className="resume-right"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
+        >
+          <div className="skills-categories">
+            {SKILLS_PROSE.map((s) => (
+              <div key={s.cat} className="skill-category-block">
+                <p className="skill-category-title">[{s.cat}]</p>
+                <div className="tech-badge-grid">
+                  {s.items.split(' / ').map((item) => (
+                    <TechBadge key={item} name={item} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </motion.div>
