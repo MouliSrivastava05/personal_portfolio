@@ -21,6 +21,18 @@ const PROJECTS = [
   {
     id: '01',
     category: 'Full-Stack',
+    year: '2024',
+    title: 'Rated',
+    url: 'rated-lemon.vercel.app',
+    img: 'https://images.unsplash.com/photo-1523381294911-8d3cead13475?auto=format&fit=crop&w=900&q=80',
+    link: 'https://github.com/MouliSrivastava05/Rated.git',
+    demo: 'https://rated-lemon.vercel.app/',
+    desc: 'High-performance streetwear e-commerce platform with a custom brutalist design system. Features React Context state management, Firebase auth, and dynamic product routing.',
+    tags: ['React', 'Vite', 'Firebase', 'Vanilla CSS'],
+  },
+  {
+    id: '02',
+    category: 'Full-Stack',
     year: '2025',
     title: 'ReliefOps',
     url: 'relief-ops-two.vercel.app',
@@ -31,7 +43,7 @@ const PROJECTS = [
     tags: ['Next.js', 'TypeScript', 'MongoDB', 'Google Maps API'],
   },
   {
-    id: '02',
+    id: '03',
     category: 'GenAI / Agentic',
     year: '2026',
     title: 'ChurnIQ',
@@ -43,7 +55,7 @@ const PROJECTS = [
     tags: ['Python', 'LangGraph', 'FAISS', 'Groq', 'Streamlit'],
   },
   {
-    id: '03',
+    id: '04',
     category: 'Full-Stack',
     year: '2025',
     title: 'NexCraft',
@@ -55,7 +67,7 @@ const PROJECTS = [
     tags: ['Next.js', 'Firebase', 'Groq', 'MongoDB'],
   },
   {
-    id: '04',
+    id: '05',
     category: 'Full-Stack',
     year: '2025',
     title: 'MoneyMatic',
@@ -67,7 +79,7 @@ const PROJECTS = [
     tags: ['React', 'Node.js', 'MySQL', 'JWT'],
   },
   {
-    id: '05',
+    id: '06',
     category: 'Data / Analytics',
     year: '2024',
     title: 'Market Analytics',
@@ -79,7 +91,7 @@ const PROJECTS = [
     tags: ['Excel', 'Python', 'Tableau', 'Pandas'],
   },
   {
-    id: '06',
+    id: '07',
     category: 'Data / Analytics',
     year: '2024',
     title: 'Amazon Intelligence',
