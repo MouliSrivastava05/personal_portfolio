@@ -53,7 +53,7 @@ export default function About() {
           Sharp<br />
           code,<br />
           <span className="hl-italic">smarter</span><br />
-          systems.
+          <span className="hl-mono">systems.</span>
         </motion.h2>
 
         {/* Right content */}

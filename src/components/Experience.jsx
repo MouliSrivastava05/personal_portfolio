@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import TechBadge from './TechBadge';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -74,7 +73,7 @@ export default function Experience() {
           viewport={{ once: true, margin: '-80px' }}
           variants={fadeUp}
         >
-          <p className="resume-block-title">Professional Timeline</p>
+          <p className="resume-block-title">Experience</p>
 
           {EXPERIENCE.map((e) => (
             <div className="exp-item" key={e.org}>
@@ -117,11 +116,9 @@ export default function Experience() {
             {SKILLS_PROSE.map((s) => (
               <div key={s.cat} className="skill-category-block">
                 <p className="skill-category-title">[{s.cat}]</p>
-                <div className="tech-badge-grid">
-                  {s.items.split(' / ').map((item) => (
-                    <TechBadge key={item} name={item} />
-                  ))}
-                </div>
+                <p className="skill-raw-text">
+                  {s.items.split(' / ').join(', ')}
+                </p>
               </div>
             ))}
           </div>

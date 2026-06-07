@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SplitText from './SplitText';
 
 const stagger = {
   hidden: {},
@@ -16,13 +17,6 @@ const slideRight = {
 };
 
 export default function Hero({ data }) {
-  const STATUS = [
-    { key: 'Location', val: data.location, highlight: false },
-    { key: 'Status', val: 'B.Tech AI · 2024–28', highlight: false },
-    { key: 'GitHub', val: `@${data.username}`, highlight: false },
-    { key: 'Availability', val: 'Internships 2026', highlight: true },
-  ];
-
   return (
     <section className="hero-wrap" id="home">
       {/* Chapter-style intro */}
@@ -47,8 +41,11 @@ export default function Hero({ data }) {
         {/* Left: Large name */}
         <motion.div className="hero-name-block" variants={slideUp}>
           <h1 className="hero-name">
-            MOULI<br />
-            <span className="name-line-2">Srivastava</span>
+            <SplitText text="MOULI" delay={0.06} duration={0.8} />
+            <br />
+            <span className="name-line-2">
+              <SplitText text="Srivastava" delay={0.04} duration={0.8} />
+            </span>
           </h1>
         </motion.div>
 
@@ -65,19 +62,15 @@ export default function Hero({ data }) {
         </motion.div>
       </motion.div>
 
-      {/* Bottom status bar */}
+      {/* Absolute Positioned Banner */}
       <motion.div
-        className="hero-status-row"
+        className="hero-absolute-banner"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
       >
-        {STATUS.map(({ key, val, highlight }) => (
-          <div className="hero-status-item" key={key}>
-            <p className="hero-status-key">{key}</p>
-            <p className={`hero-status-val${highlight ? ' amber' : ''}`}>{val}</p>
-          </div>
-        ))}
+        <p className="hero-banner-key">Availability</p>
+        <p className="hero-banner-val amber">Internships 2026</p>
       </motion.div>
     </section>
   );
