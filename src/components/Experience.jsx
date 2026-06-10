@@ -1,129 +1,101 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+
+const EXP = [
+  {
+    role: 'Web Dev Intern', org: 'CollegePur', type: 'Remote', date: 'Jun–Aug 2025',
+    bullets: [
+      'Built responsive UI with React + Tailwind, cut page load time 30%',
+      'Integrated REST API endpoints and dynamic filter arrays',
+      'Connected agentic GenAI suggestion models to frontend',
+      'Reduced client-side rendering lag by refactoring hooks',
+      'Extracted DB insights with Python Pandas for analytics',
+    ],
+  }
+];
+
+const EDU = [
+  { deg: 'B.Tech — Artificial Intelligence', inst: 'Newton School of Technology, Rishihood University', year: '2024–2028', grade: 'GPA 7.2/10' },
+  { deg: 'Class XII', inst: 'Lal Bahadur Shastri School, Kota', year: '2023–2024', grade: '78.2%' },
+  { deg: 'Class X', inst: 'Lucknow Public School', year: '2021–2022', grade: '89.9%' },
+];
+
+const SKILLS = [
+  { cat: 'LANGUAGES', list: 'Python · JS · TypeScript · SQL' },
+  { cat: 'FRONTEND', list: 'React · Next.js' },
+  { cat: 'BACKEND', list: 'Node · Express · FastAPI' },
+  { cat: 'AI · ML', list: 'LangChain · LangGraph · FAISS · HuggingFace · Groq' },
+  { cat: 'DATABASES', list: 'MongoDB · MySQL · Firebase · PostgreSQL' },
+  { cat: 'ANALYTICS', list: 'Pandas · NumPy · Tableau · Streamlit' },
+];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1.0, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
 
-const EXPERIENCE = [
-  {
-    role: 'Web Dev Intern',
-    org: 'CollegePur',
-    period: 'Jun – Aug 2025',
-    location: 'Remote',
-    bullets: [
-      'Built responsive UI systems with React and Tailwind CSS, reducing page load time by 30%.',
-      'Integrated REST API endpoints and dynamic filter arrays for course listings.',
-      'Connected agentic GenAI suggestion models to the frontend user experience.',
-      'Refactored component hooks to minimize client-side rendering lag across transitions.',
-      'Extracted database insights using Python Pandas for product analytics reporting.',
-    ],
-  },
-];
-
-const EDUCATION = [
-  {
-    name: 'B.Tech — Artificial Intelligence',
-    inst: 'Newton School of Technology, Rishihood University',
-    period: '2024 – 2028',
-    grade: 'GPA 7.2 / 10',
-  },
-  {
-    name: 'Intermediate (Class XII)',
-    inst: 'Lal Bahadur Shastri School, Kota',
-    period: '2023 – 2024',
-    grade: '78.2%',
-  },
-  {
-    name: 'Matriculation (Class X)',
-    inst: 'Lucknow Public School, Lucknow',
-    period: '2021 – 2022',
-    grade: '89.9%',
-  },
-];
-
-const SKILLS_PROSE = [
-  { cat: 'Languages', items: 'Python / SQL / JavaScript / TypeScript' },
-  { cat: 'Frontend', items: 'React / Next.js / Tailwind / Redux' },
-  { cat: 'Backend', items: 'Node.js / Express / FastAPI / Streamlit' },
-  { cat: 'AI / ML', items: 'LangChain / LangGraph / FAISS / HuggingFace / Groq / OpenAI' },
-  { cat: 'Databases', items: 'MongoDB / MySQL / Firebase / PostgreSQL' },
-  { cat: 'Analytics', items: 'Pandas / NumPy / Tableau / Excel / Matplotlib' },
-];
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
 
 export default function Experience() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <section className="resume-section" id="resume">
-      <motion.p
-        className="resume-chapter"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.8 }}
+    <section id="resume" ref={ref}>
+      <motion.div 
+        className="resume-layout"
+        variants={stagger}
+        initial="hidden"
+        animate={inView ? 'visible' : 'hidden'}
       >
-        004 / Resume
-      </motion.p>
-
-      <div className="resume-columns">
-        {/* Left: Experience + Education */}
-        <motion.div
-          className="resume-left"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={fadeUp}
-        >
-          <p className="resume-block-title">Experience</p>
-
-          {EXPERIENCE.map((e) => (
-            <div className="exp-item" key={e.org}>
-              <div className="exp-top-row">
-                <span className="exp-role">{e.role}</span>
-                <span className="exp-period-tag">{e.period}</span>
+        {/* Left Col: Exp + Edu */}
+        <motion.div variants={stagger}>
+          <motion.div variants={fadeUp}>
+            <h3 className="resume-col-title">Experience</h3>
+            {EXP.map(e => (
+              <div key={e.org} className="exp-block">
+                <h4 className="exp-role">{e.role}</h4>
+                <div className="exp-meta">
+                  <span className="exp-org">{e.org} · {e.type}</span>
+                  <span className="exp-date">{e.date}</span>
+                </div>
+                <ul className="exp-bullets">
+                  {e.bullets.map((b, i) => <li key={i} className="exp-bullet">— {b}</li>)}
+                </ul>
               </div>
-              <p className="exp-org-label">{e.org} · {e.location}</p>
-              <ul className="exp-list">
-                {e.bullets.map((b, i) => (
-                  <li key={i} className="exp-list-item">{b}</li>
-                ))}
-              </ul>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeUp} style={{ marginTop: '64px' }}>
+            <h3 className="resume-col-title">Education</h3>
+            <div className="edu-list">
+              {EDU.map(e => (
+                <div key={e.deg} className="edu-item">
+                  <div className="edu-degree">{e.deg}</div>
+                  <div className="edu-meta">
+                    <span className="edu-inst">{e.inst} · {e.year}</span>
+                    <span className="edu-grade">{e.grade}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Right Col: Skills */}
+        <motion.div variants={fadeUp}>
+          <h3 className="resume-col-title">Skills</h3>
+          {SKILLS.map(s => (
+            <div key={s.cat} className="skill-block">
+              <div className="skill-label">{s.cat}</div>
+              <div className="skill-text">{s.list}</div>
             </div>
           ))}
-
-          <div className="edu-section">
-            <p className="resume-block-title">Academic Milestones</p>
-            {EDUCATION.map((edu) => (
-              <div className="edu-row" key={edu.name}>
-                <div className="edu-left">
-                  <div className="edu-name">{edu.name}</div>
-                  <div className="edu-inst">{edu.inst} · {edu.period}</div>
-                </div>
-                <span className="edu-grade">{edu.grade}</span>
-              </div>
-            ))}
-          </div>
         </motion.div>
-
-        {/* Right: Skills prose */}
-        <motion.div
-          className="resume-right"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={fadeUp}
-        >
-          <div className="skills-categories">
-            {SKILLS_PROSE.map((s) => (
-              <div key={s.cat} className="skill-category-block">
-                <p className="skill-category-title">[{s.cat}]</p>
-                <p className="skill-raw-text">
-                  {s.items.split(' / ').join(', ')}
-                </p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

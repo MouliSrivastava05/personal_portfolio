@@ -1,10 +1,11 @@
-import { motion } from 'framer-motion';
-import TechBadge from './TechBadge';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
-};
+const STATS = [
+  { n: '06', l: 'projects shipped' },
+  { n: '3+', l: 'ai systems built' },
+  { n: '1', l: 'internship' },
+];
 
 const FOCUS = [
   'Agentic AI systems with LangGraph and LLMs',
@@ -15,120 +16,86 @@ const FOCUS = [
 ];
 
 const STACK = [
-  'Python', 'JavaScript', 'TypeScript', 'SQL',
-  'React', 'Next.js', 'Node.js', 'Express', 'FastAPI',
-  'LangChain', 'LangGraph', 'FAISS', 'HuggingFace', 'Groq',
-  'MongoDB', 'MySQL', 'Firebase', 'PostgreSQL',
-  'Pandas', 'NumPy', 'Tableau', 'Streamlit', 'Git', 'Figma',
+  { cat: 'Languages', items: ['Python', 'JavaScript', 'TypeScript', 'SQL'] },
+  { cat: 'Frontend', items: ['React', 'Next.js', 'Node.js', 'Express', 'FastAPI'] },
+  { cat: 'AI / ML', items: ['LangChain', 'LangGraph', 'FAISS', 'HuggingFace', 'Groq'] },
+  { cat: 'Databases', items: ['MongoDB', 'MySQL', 'Firebase', 'PostgreSQL'] },
+  { cat: 'Data & Analytics', items: ['Pandas', 'NumPy', 'Tableau', 'Streamlit'] },
 ];
 
-const STATS = [
-  { n: '06', l: 'Projects Shipped' },
-  { n: '3+', l: 'AI Systems Built' },
-  { n: '1', l: 'Internship' },
-];
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
 
 export default function About() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+
   return (
-    <section className="about-section" id="about">
-      <motion.p
-        className="about-chapter"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.8 }}
+    <section id="about" ref={ref}>
+      <motion.div 
+        className="about-layout"
+        variants={stagger}
+        initial="hidden"
+        animate={inView ? 'visible' : 'hidden'}
       >
-        002 / About
-      </motion.p>
+        {/* Left: Headline Rhythm */}
+        <motion.div className="about-headline" variants={fadeUp}>
+          <span className="about-headline-1">Sharp code,</span>
+          <span className="about-headline-2">smarter</span>
+          <span className="about-headline-3">systems.</span>
+        </motion.div>
 
-      <div className="about-layout">
-        {/* Left sticky headline */}
-        <motion.h2
-          className="about-headline"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={fadeUp}
-        >
-          Sharp<br />
-          code,<br />
-          <span className="hl-italic">smarter</span><br />
-          <span className="hl-mono">systems.</span>
-        </motion.h2>
-
-        {/* Right content */}
-        <div>
-          <motion.p
-            className="about-para"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
-          >
-            I'm <strong>Mouli Srivastava</strong> — a full-stack developer and AI engineer who builds systems that think. I work at the intersection of the MERN stack and agentic AI, shipping production-grade applications powered by LLMs, RAG pipelines, and multi-node LangGraph workflows.
+        {/* Right: Bio, Stats, Focus, Tech */}
+        <motion.div variants={stagger}>
+          <motion.p className="about-bio" variants={fadeUp}>
+            Works at the intersection of MERN stack and agentic AI. Ships production-grade apps with LLMs, RAG pipelines, and LangGraph workflows. Every system is explainable, grounded in evidence, built to handle failure gracefully.
           </motion.p>
 
-          <motion.p
-            className="about-para"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
-          >
-            My edge is bridging the gap between raw model intelligence and real-world product utility — every system I ship is explainable, grounded in evidence, and built to handle failure gracefully.
-          </motion.p>
-
-          {/* Stats */}
-          <motion.div
-            className="about-stats-row"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
-          >
-            {STATS.map(({ n, l }) => (
-              <div className="about-stat" key={l}>
-                <div className="about-stat-n">{n}</div>
-                <div className="about-stat-l">{l}</div>
+          <motion.div className="about-stats" variants={fadeUp}>
+            {STATS.map(s => (
+              <div key={s.l} className="stat-item">
+                <span className="stat-num">{s.n}</span>
+                <span className="stat-label">{s.l}</span>
               </div>
             ))}
           </motion.div>
 
-          {/* Focus areas */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
-          >
-            <p className="about-focus-title">Currently Focused On</p>
-            <div className="about-focus-rows">
+          <motion.div variants={fadeUp}>
+            <p className="hero-label" style={{ marginBottom: '16px' }}>currently focused on</p>
+            <div className="focus-grid">
               {FOCUS.map((item, i) => (
-                <div className="about-focus-row" key={item}>
-                  <span className="about-focus-idx">0{i + 1}</span>
-                  <span>{item}</span>
+                <div key={i} className="focus-item">
+                  <span className="focus-num">0{i + 1}</span>
+                  <span className="focus-text">{item}</span>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Stack */}
-          <motion.div
-            className="stack-block"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
-          >
-            <p className="stack-title">Tech Stack</p>
-            <div className="tech-badge-grid">
-              {STACK.map((t) => (
-                <TechBadge key={t} name={t} />
-              ))}
-            </div>
+          <motion.div variants={fadeUp}>
+            <p className="hero-label" style={{ marginBottom: '16px', marginTop: '24px' }}>tech stack</p>
+            {STACK.map(s => (
+              <div key={s.cat} className="stack-group">
+                <p className="stack-cat">{s.cat}</p>
+                <div className="stack-list">
+                  {s.items.map((item, i) => (
+                    <span key={item}>
+                      <span className="stack-pill">{item}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </motion.div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

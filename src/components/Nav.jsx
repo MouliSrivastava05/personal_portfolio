@@ -1,36 +1,60 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+
+const LINKS = [
+  { label: 'About', href: '#about' },
+  { label: 'Work', href: '#projects' },
+  { label: 'Resume', href: '#resume' },
+  { label: 'Contact', href: '#contact' },
+];
 
 export default function Nav() {
-  const links = [
-    { label: 'About', href: '#about' },
-    { label: 'Work', href: '#projects' },
-    { label: 'Resume', href: '#resume' },
-    { label: 'Contact', href: '#contact' },
-  ];
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+
+      // Simple active section tracker
+      const sections = ['about', 'projects', 'resume', 'contact'];
+      for (const s of sections.reverse()) {
+        const el = document.getElementById(s);
+        if (el && window.scrollY >= el.offsetTop - 200) {
+          setActive(s);
+          return;
+        }
+      }
+      setActive('');
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <motion.nav
-      className="site-nav"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-    >
+    <nav className={`site-nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-inner">
-        <a href="#" className="nav-logo">MS / Portfolio</a>
+        <a href="#home" className="nav-logo">MS / Portfolio</a>
 
-        <ul className="nav-links">
-          {links.map(({ label, href }) => (
-            <li key={label}>
-              <a href={href} className="nav-link">{label}</a>
-            </li>
+        <div className="nav-links">
+          {LINKS.map(({ label, href }) => (
+            <a 
+              key={label} 
+              href={href} 
+              className={`nav-link ${active === href.substring(1) ? 'active' : ''}`}
+            >
+              {label}
+            </a>
           ))}
-        </ul>
-
-        <div className="nav-availability">
-          <span className="nav-avail-dot" />
-          Available for Internships
         </div>
+
+        <div className="nav-avail">
+          <span className="nav-avail-dot" />
+          available for internships
+        </div>
+
+        <button className="nav-mobile-btn">Menu</button>
       </div>
-    </motion.nav>
+    </nav>
   );
 }

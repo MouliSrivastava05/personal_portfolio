@@ -1,77 +1,100 @@
-import { motion } from 'framer-motion';
-import SplitText from './SplitText';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import DecryptedText from './DecryptedText';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+};
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.14, delayChildren: 0.2 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
-const slideUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } },
-};
+export default function Hero() {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-100, 100], [10, -10]);
+  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
 
-const slideRight = {
-  hidden: { opacity: 0, x: 30 },
-  visible: { opacity: 1, x: 0, transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } },
-};
+  const handleMouseMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set(event.clientX - centerX);
+    y.set(event.clientY - centerY);
+  };
 
-export default function Hero({ data }) {
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
   return (
     <section className="hero-wrap" id="home">
-      {/* Chapter-style intro */}
-      <motion.div
-        className="hero-chapter-line"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.1 }}
-      >
-        <span className="hero-chapter-num">001</span>
-        <div className="hero-chapter-rule" />
-        <span className="hero-chapter-label">Introduction</span>
-      </motion.div>
+      <div className="site-wrapper" style={{ width: '100%' }}>
+        <motion.div 
+          className="hero-inner"
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Left Column */}
+          <div className="hero-text-col">
+            <motion.p className="hero-label" variants={fadeUp}>
+              001 — introduction
+            </motion.p>
+            
+            <motion.div className="hero-name-row" variants={fadeUp}>
+              <h1 className="hero-name">MOULI</h1>
+              <h1 className="hero-name italic">Srivastava</h1>
+            </motion.div>
 
-      {/* Main split layout */}
-      <motion.div
-        className="hero-body"
-        variants={stagger}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Left: Large name */}
-        <motion.div className="hero-name-block" variants={slideUp}>
-          <h1 className="hero-name">
-            <SplitText text="MOULI" delay={0.06} duration={0.8} />
-            <br />
-            <span className="name-line-2">
-              <SplitText text="Srivastava" delay={0.04} duration={0.8} />
-            </span>
-          </h1>
-        </motion.div>
+            <motion.p className="hero-tagline" variants={fadeUp}>
+              <DecryptedText text="full-stack developer & ai engineer" speed={40} delay={600} />
+            </motion.p>
 
-        {/* Right: Tagline + chips */}
-        <motion.div className="hero-right" variants={slideRight}>
-          <p className="hero-statement">
-            Full-stack developer &amp; AI engineer who builds <strong>systems that think.</strong> Working at the intersection of agentic AI and high-performance web engineering.
-          </p>
-          <div className="hero-role-chips">
-            <span className="hero-chip">Full-Stack Dev</span>
-            <span className="hero-chip">AI / LLM Systems</span>
-            <span className="hero-chip">Data Engineering</span>
+            <motion.div className="hero-pills" variants={fadeUp}>
+              <span className="hero-pill">Full-Stack Dev</span>
+              <span className="hero-pill">AI / LLM Systems</span>
+              <span className="hero-pill">Data Engineering</span>
+            </motion.div>
           </div>
-        </motion.div>
-      </motion.div>
 
-      {/* Absolute Positioned Banner */}
-      <motion.div
-        className="hero-absolute-banner"
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.0, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <p className="hero-banner-key">Availability</p>
-        <p className="hero-banner-val amber">Internships 2026</p>
-      </motion.div>
+          {/* Right Column */}
+          <motion.div className="hero-photo-col" variants={fadeUp}>
+            <motion.div 
+              className="hero-photo-frame"
+              style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div className="hero-photo-inner">
+                <img src="/profile.jpg" alt="Mouli Srivastava" className="hero-photo-img" />
+              </div>
+              
+              {/* Rotating Circular Badge */}
+              <motion.div 
+                className="hero-rotating-badge"
+                style={{ translateZ: 50 }}
+              >
+                <svg viewBox="0 0 100 100" width="100" height="100">
+                  <defs>
+                    <path id="circlePath" d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0" />
+                  </defs>
+                  <text className="hero-badge-text">
+                    <textPath href="#circlePath" startOffset="0%">
+                      AVAILABLE FOR INTERNSHIPS · 2026 ·
+                    </textPath>
+                  </text>
+                </svg>
+                <div className="hero-badge-center"></div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      <div className="scroll-hint" />
     </section>
   );
 }
