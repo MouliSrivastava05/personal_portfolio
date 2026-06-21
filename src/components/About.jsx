@@ -85,7 +85,7 @@ export default function About() {
               <div key={s.cat} className="stack-group">
                 <p className="stack-cat">{s.cat}</p>
                 <div className="stack-list">
-                  {s.items.map((item, i) => (
+                  {s.items.map((item) => (
                     <span key={item}>
                       <span className="stack-pill">{item}</span>
                     </span>

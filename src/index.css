@@ -918,3 +918,183 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   .footer-inner { padding: 0 24px; flex-direction: column; align-items: center; gap: 8px; }
 }
+
+/* ============================================================
+   PROJECT DETAILS DRAWER & TECH BADGES
+   ============================================================ */
+.zine-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.zine-drawer-panel {
+  width: 100%;
+  max-width: 580px;
+  height: 100%;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--outline);
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.drawer-close-trigger {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-11);
+  text-transform: uppercase;
+  align-self: flex-end;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.drawer-close-trigger:hover {
+  color: var(--ember);
+  border-color: var(--ember);
+}
+
+.drawer-meta-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-22);
+  color: var(--ember-dim);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.drawer-title-serif {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, var(--text-48));
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-top: 6px;
+  margin-bottom: 32px;
+}
+
+.drawer-img-frame {
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--outline);
+  margin-bottom: 32px;
+}
+
+.drawer-img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(10%);
+}
+
+.drawer-body-text {
+  font-size: var(--text-15);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.drawer-action-row {
+  margin-top: auto;
+  padding-top: 48px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Badge mapping styles */
+.tech-badge-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(28, 28, 39, 0.65);
+  border: 1px solid var(--outline);
+  padding: 6px 14px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.tech-badge:hover {
+  background: rgba(28, 28, 39, 0.9);
+  border-color: var(--ember);
+  transform: translateY(-2px);
+}
+
+.tech-badge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.tech-badge-text {
+  font-family: var(--font-mono);
+  font-size: var(--text-11);
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.tech-badge:hover .tech-badge-text {
+  color: var(--text-primary);
+}
+
+/* Action button variations */
+.btn-accent-filled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ember);
+  color: var(--bg-base);
+  border: 1px solid var(--ember);
+  font-family: var(--font-mono);
+  font-size: var(--text-11);
+  text-transform: uppercase;
+  padding: 12px 28px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-accent-filled:hover {
+  background: none;
+  color: var(--ember);
+}
+
+.btn-outline-border {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: var(--text-secondary);
+  border: 1px solid var(--outline);
+  font-family: var(--font-mono);
+  font-size: var(--text-11);
+  text-transform: uppercase;
+  padding: 12px 28px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-outline-border:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}

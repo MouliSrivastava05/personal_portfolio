@@ -6,13 +6,6 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 
-import ratedImg from './assets/projects/rated.png';
-import reliefOpsImg from './assets/projects/reliefops.png';
-import churnIQImg from './assets/projects/churniq.png';
-import nexCraftImg from './assets/projects/nexcraft.png';
-import moneyMaticImg from './assets/projects/moneymatic.png';
-import marketAnalyticsImg from './assets/projects/market_analytics.png';
-import amazonIntelligenceImg from './assets/projects/amazon_intelligence.png';
 
 export default function App() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });

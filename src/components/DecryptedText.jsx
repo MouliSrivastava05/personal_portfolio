@@ -1,24 +1,20 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
 
 export default function DecryptedText({ text, speed = 40, delay = 0, className = '' }) {
   const [displayText, setDisplayText] = useState('');
-  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     let timeout;
     let interval;
     
     timeout = setTimeout(() => {
-      setIsAnimating(true);
       let i = 0;
       
       interval = setInterval(() => {
         if (i >= text.length) {
           clearInterval(interval);
-          setIsAnimating(false);
           setDisplayText(text);
           return;
         }
